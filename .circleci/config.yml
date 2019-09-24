@@ -39,6 +39,6 @@ jobs:
           command: |
             source activate wes-mapping-bwa-gatk
             python3.7 scripts/prepare_design.py --single --recursive tests --debug
-            python3.7 scripts/prepare_config.py tests/genomes/genome.fasta tests/genomes/dbsnp.vcf.gz --debug --cold-storage /mnt
+            python3.7 scripts/prepare_config.py tests/genomes/genome.fasta tests/genomes/dbsnp.vcf.gz --debug --cold-storage /mnt --samtools-sort-memory 1
             snakemake -s Snakefile --use-conda -j 1 --force
             snakemake -s Snakefile --use-conda --report -j 1 --force
