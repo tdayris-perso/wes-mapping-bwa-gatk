@@ -20,7 +20,7 @@ rule samtools_sort_query:
     log:
         "logs/samtools/query_sort_{sample}.log"
     params:
-        "-m 8G -n"
+        f"-m {config["params"].get("samtools_sort_memory", "8")}G -n"
     wrapper:
         f"{swv}/bio/samtools/sort"
 
@@ -81,7 +81,7 @@ rule samtools_sort_coordinate:
     log:
         "logs/samtools/query_sort_{sample}.log"
     params:
-        "-m 8G"
+        f"-m {config["params"].get("samtools_sort_memory", "8")}G"
     wrapper:
         f"{swv}/bio/samtools/sort"
 

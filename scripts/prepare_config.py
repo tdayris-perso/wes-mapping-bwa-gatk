@@ -256,6 +256,14 @@ def parse_args(args: Any = sys.argv[1:]) -> argparse.ArgumentParser:
         default="-b -h -F 12"
     )
 
+    main_parser.add_argument(
+        "--samtools-sort-memory",
+        help="Amount of memory allocated for samtools sort "
+             "(default: %(default)s G)",
+        type=str,
+        default="8"
+    )
+
     # Logging options
     log = main_parser.add_mutually_exclusive_group()
     log.add_argument(

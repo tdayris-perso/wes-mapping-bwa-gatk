@@ -27,3 +27,4 @@ params:
   samtools_fixmate_extra: "-c -m"
   picard_sequence_dict_extra: "GENOME_ASSEMBLY=GRCH38 SPECIES=HSA URI=https://www.gencodegenes.org/human/"
   samtools_faidx_extra: ""
+  samtools_sort_memory: "8"
