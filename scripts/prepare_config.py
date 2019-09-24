@@ -319,6 +319,7 @@ def test_parse_args() -> None:
         samtools_faidx_extra='',
         samtools_fixmate_extra='-c -m',
         samtools_view='-b -h -F 12',
+        samtools_sort_memory="8",
         singularity='docker://continuumio/miniconda3:4.4.10',
         threads=1,
         workdir='.'
@@ -394,7 +395,8 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
             "samtools_fixmate_extra": args.samtools_fixmate_extra,
             "picard_sequence_dict_extra": args.picard_sequence_dict_extra,
             "samtools_view": args.samtools_view,
-            "samtools_faidx_extra": args.samtools_faidx_extra
+            "samtools_faidx_extra": args.samtools_faidx_extra,
+            "samtools_sort_memory": args.samtools_sort_memory
         }
     }
 
@@ -426,7 +428,8 @@ def test_args_to_dict() -> None:
             'picard_summary_extra': '',
             'samtools_faidx_extra': '',
             'samtools_fixmate_extra': '-c -m',
-            'samtools_view': '-b -h -F 12'
+            'samtools_view': '-b -h -F 12',
+            "samtools_sort_memory": '8'
         },
         'ref': {'fasta': '/path/to/fasta.fa', 'known': ['/path/to/known.vcf']},
         'singularity_docker_image': 'docker://continuumio/miniconda3:4.4.10',
