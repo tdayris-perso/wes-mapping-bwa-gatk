@@ -9,4 +9,4 @@ bash miniconda.sh -b -p miniconda
 conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
-conda env create --file envs/workflow.yaml
+conda env create --file envs/workflows.yaml
