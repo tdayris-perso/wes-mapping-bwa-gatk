@@ -112,8 +112,8 @@ def test_search_fq():
     Example:
     pytest -v prepare_design.py -k test_search_fq
     """
-    path = Path("../tests/reads/")
-    expected = [Path('../tests/reads/a_U.fastq')]
+    path = Path("tests/reads/")
+    expected = [Path('tests/reads/a_U.fastq')]
     assert sorted(list(search_fq(path))) == sorted(expected)
 
 
@@ -256,8 +256,8 @@ def test_classify_fq():
     Example:
     pytest -v ./prepare_design.py -k test_classify_fq
     """
-    prefix = Path(__file__).parent.parent
-    classification = classify_fq([prefix / "file1.fq"], False)
+    prefix = Path(__file__).parent
+    classification = classify_fq([prefix / "file1.fq"], True)
     expected = {
         'file1.fq': {
             'Sample_id': 'file1',

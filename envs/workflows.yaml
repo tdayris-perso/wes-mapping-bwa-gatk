@@ -1,5 +1,4 @@
 name: wes-mapping-bwa-gatk
-name: rna-count-salmon
 channels:
   - bioconda
   - conda-forge
