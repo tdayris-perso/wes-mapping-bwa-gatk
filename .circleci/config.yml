@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    # machine: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run:
+          name: "Pull Submodules"
+          command: |
+            git submodule init
+            git submodule update --remote
+
+      - restore_cache:
+          keys:
+            - snakemake-{{ checksum ".circleci/setup.sh" }}
+
+      - run:
+          name: Update PATH
+          command: "echo 'export PATH=${PWD}/miniconda/bin:${PATH}' >> ${BASH_ENV}"
+
+      - run:
+          name: Setup Conda
+          command: bash .circleci/setup.sh
+
+      - save_cache:
+          key: snakemake-{{ checksum ".circleci/setup.sh" }}
+          paths:
+            - miniconda
+
+      - run:
+          name: Run Unit testing
+          command: |
+            source activate wes-mapping-bwa-gatk
+            pytest -v scripts/prepare_config.py scripts/prepare_design.py
+
+      - run:
+          name: Run System testing
+          command: |
+            source activate wes-mapping-bwa-gatk
+            python3.7 scripts/prepare_design.py --single --recursive tests --debug
+            python3.7 scripts/prepare_config.py tests/genomes/genome.fasta tests/genomes/dbsnp.vcf.gz --debug --cold-storage /mnt
+            snakemake -s ../Snakefile --use-conda -j 1 --force
+            snakemake -s ../Snakefile --use-conda --report -j 1 --force

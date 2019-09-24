@@ -1,0 +1,19 @@
+name: wes-mapping-bwa-gatk
+name: rna-count-salmon
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-forge::python=3.7.3
+  - conda-forge::pytest=5.1.2
+  - conda-forge::datrie=0.8
+  - conda-forge::git=2.20.1
+  - conda-forge::jinja2=2.10.1
+  - conda-forge::pygraphviz=1.5
+  - conda-forge::flask=1.1.1
+  - conda-forge::pandas=0.25.1
+  - conda-forge::zlib=1.2.11
+  - conda-forge::openssl=1.1.1c
+  - conda-forge::networkx=2.3
+  - bioconda::snakemake=5.5.4

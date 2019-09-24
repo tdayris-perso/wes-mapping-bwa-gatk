@@ -1,0 +1,29 @@
+design: design.tsv
+workdir: .
+threads: 1
+singularity_docker_image: docker://continuumio/miniconda3:4.4.10
+cold_storage:
+  - /media
+ref:
+  fasta: /path/to/genome/sequence.fa
+  known:
+    - /path/to/known.vcf
+    - /path/to/other.known.vcf
+workflow:
+  fastqc: true
+  multiqc: true
+  mapping_quality: true
+params:
+  copy_extra: "--parents --verbose"
+  bwa_index_extra: ""
+  bwa_map_extra: "-T 20 -M"
+  picard_sort_sam_extra: ""
+  picard_group_extra: "RGLB=standard RGPL=illumina RGPU={sample} RGSM={sample}"
+  picard_dedup_extra: "REMOVE_DUPLICATES=true"
+  picard_isize_extra: "METRIC_ACCUMULATION_LEVEL=SAMPLE"
+  gatk_bqsr_extra: ""
+  picard_summary_extra: ""
+  samtools_view: "-b -h -F 12"
+  samtools_fixmate_extra: "-c -m"
+  picard_sequence_dict_extra: "GENOME_ASSEMBLY=GRCH38 SPECIES=HSA URI=https://www.gencodegenes.org/human/"
+  samtools_faidx_extra: ""

@@ -1,0 +1,121 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: Snakemake configuration file
+
+type: object
+
+proprerties:
+  design:
+    type: string
+    description: Path to design file
+    default: design.tsv
+  workdir:
+    type: string
+    default: .
+    description: Path to working directory
+  threads:
+    type: integer
+    default: 1
+    description: Maximum number of threads used
+  singularity_docker_image:
+    type: string
+    description: Images used within singularity
+    default: docker://continuumio/miniconda3:4.4.10
+  cold_storage:
+    type: array
+    description: A list of paths which are not open for IO processes
+    default: NONE
+    items:
+      type: string
+    uniqueItems: true
+    minItems: 1
+
+ref:
+  type: object
+  proprerties:
+    fasta:
+      type: string
+      description: A path to a fasta-formatted genome sequence
+    known:
+      type: array
+      description: Path to known sites
+      default: NONE
+      items:
+        - string
+      uniqueItems: true
+      minItems: 1
+  required:
+    - fasta
+    - known
+
+workflow:
+  type: object
+  fastqc:
+    type: bool
+    default: true
+    description: Weather or not to lunch fastqc
+  multiqc:
+    type: bool
+    default: true
+    description: Weather or not to lunch multiqc
+  samtools:
+    type: bool
+    default: true
+    description: Weather or not to lunch samtools
+  gatk:
+    type: bool
+    default: true
+    description: Weather or not to lunch gatk
+
+params:
+  type: object
+  description: Optional agruments for each rule
+  copy_extra:
+    type: string
+    description: Extra parameters for bash cp
+    default: " --verbose --update "
+  bwa_index_extra:
+    type: string
+    description: Extra parameters for bwa index
+    default: ""
+  bwa_map_extra:
+    type: string
+    description: Extra parameters for bwa mem
+    default: ""
+  samtools_sort_extra:
+    type: string
+    description: Extra parameters for samtools
+    default: ""
+  samtools_flagstat_extra:
+    type: string
+    description: Extra parameters for samtools flagstat
+    default: ""
+  gatk_read_group_extra:
+    type: string
+    description: Extra parameters for gatk add read group
+    default: ""
+  gatk_bqsr_extra:
+    type: string
+    description: Extra parameters for gatk bqsr
+    default: ""
+  gatk_bqsr_apply_extra:
+    type: string
+    description: Extra parameters for gatk apply bqsr
+    default: ""
+  required:
+    - copy_extra
+    - bwa_index_extra
+    - bwa_map_extra
+    - samtools_sort_extra
+    - samtools_flagstat_extra
+    - gatk_read_group_extra
+    - gatk_bqsr_extra
+    - gatk_bqsr_apply_extra
+
+required:
+  - ref
+  - workdir
+  - threads
+  - singularity_docker_image
+  - cold_storage
+  - params

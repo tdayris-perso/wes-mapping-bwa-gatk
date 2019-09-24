@@ -1,0 +1,18 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: An entry in the sample sheet
+
+proprerties:
+  Sample_id:
+    type: string
+    description: Name of a given sample
+  Upstream_file:
+    type: string
+    description: Path to the upstream read file
+  Downstream_file:
+    type: string
+    description: Path to the downstream read file
+
+required:
+  - Sample_id
+  - Upstream_file

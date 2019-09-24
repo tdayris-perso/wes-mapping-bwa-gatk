@@ -1,0 +1,10 @@
+*.snakemake*
+tests/bwa
+tests/logs
+tests/picard
+tests/raw_data
+tests/qc
+tests/mapped
+tests/dbsnp*
+tests/gatk
+*__pycache__*
