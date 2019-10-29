@@ -50,7 +50,7 @@ ci-tests: SHELL:=$(BASH) -i
 ci-tests:
 	$(CONDA_ACTIVATE) $(ENV_NAME) && \
 	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --debug && \
-	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --debug --cold-storage /mnt && \
+	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --debug --cold-storage /mnt --samtools-sort-memory 1 && \
 	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --force --configfile ${PWD}/config.yaml && \
 	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report
 

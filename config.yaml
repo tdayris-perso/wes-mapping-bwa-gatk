@@ -14,7 +14,7 @@ params:
   picard_summary_extra: ''
   samtools_faidx_extra: ''
   samtools_fixmate_extra: -c -m
-  samtools_sort_memory: '8'
+  samtools_sort_memory: '1'
   samtools_view: -b -h -F 12
 ref:
   fasta: tests/genomes/genome.fasta
