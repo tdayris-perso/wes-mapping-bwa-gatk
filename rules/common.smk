@@ -13,7 +13,7 @@ import pandas as pd     # Deal with TSV files (design)
 import sys              # System related operations
 
 # Snakemake-Wrappers version
-swv = "25b6123"
+swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.42.0"
 # github prefix
 git = "https://bitbucket.org/tdayris/snakemake-wrappers/raw"
 

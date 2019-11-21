@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches-ignore: []
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  conda_setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup conda
+        run: bash .github/workflows/setup.sh
+  pipeline_test:
+    runs-on: ubuntu-latest
+    needs: conda_setup
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup workflow environment
+        run: make conda-tests
+      - name: Scripts unit-testing
+        run: make all-unit-tests
+      - name: Run Wnakemake-workflow
+        run: make ci-tests
