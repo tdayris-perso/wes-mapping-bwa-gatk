@@ -25,5 +25,9 @@ jobs:
         run: make conda-tests
       - name: Scripts unit-testing
         run: make all-unit-tests
-      - name: Run Wnakemake-workflow
+      - name: Run Snakemake-workflow
         run: make ci-tests
+      - name: Clean
+        run: make clean
+      - name: Run workflow in Singularity
+        run: make singularity-tests

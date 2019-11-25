@@ -12,9 +12,9 @@ TEST_CONFIG    = scripts/prepare_config.py
 TEST_DESIGN    = scripts/prepare_design.py
 SNAKE_FILE     = Snakefile
 ENV_YAML       = envs/workflows.yaml
-GENOME_PATH    = tests/genomes/genome.fasta
-DBSNP_PATH     = tests/genomes/dbsnp.vcf.gz
-READS_PATH     = tests/reads/
+GENOME_PATH    = genomes/genome.fasta
+DBSNP_PATH     = genomes/dbsnp.vcf.gz
+READS_PATH     = reads/
 
 # Arguments
 ENV_NAME       = wes-mapping-bwa-gatk
@@ -49,10 +49,21 @@ design-tests:
 ci-tests: SHELL:=$(BASH) -i
 ci-tests:
 	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --debug && \
-	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --debug --cold-storage /mnt --samtools-sort-memory 1 && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --force --configfile ${PWD}/config.yaml && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report
+	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
+	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
+	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --forceall --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests && \
+	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report --directory ${PWD}/tests
+
+
+# Running snakemake on test datasets
+singularity-tests: SHELL:=$(BASH) -i
+singularity-tests:
+	$(CONDA_ACTIVATE) $(ENV_NAME) && \
+	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
+	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
+	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --forceall --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests && \
+	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report --directory ${PWD}/tests
+
 
 # Environment building through conda
 conda-tests: SHELL:=$(BASH) -i
@@ -60,3 +71,10 @@ conda-tests:
 	$(CONDA_ACTIVATE) base && \
 	$(CONDA) env create --file $(ENV_YAML) --force && \
 	$(CONDA) activate $(ENV_NAME)
+
+
+# Cleaning
+clean: SHELL:=$(BASH) -i
+clean:
+	$(CONDA_ACTIVATE) $(ENV_NAME) && \
+	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --force --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests --delete-all-output

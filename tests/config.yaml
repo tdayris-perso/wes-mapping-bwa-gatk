@@ -1,0 +1,29 @@
+cold_storage:
+- /mnt
+design: design.tsv
+params:
+  bwa_index_extra: ''
+  bwa_map_extra: -T 20 -M
+  copy_extra: --verbose
+  gatk_bqsr_extra: --verbosity DEBUG
+  picard_dedup_extra: REMOVE_DUPLICATES=true
+  picard_group_extra: RGLB=standard RGPL=illumina RGPU={sample} RGSM={sample}
+  picard_isize_extra: METRIC_ACCUMULATION_LEVEL=SAMPLE
+  picard_sequence_dict_extra: GENOME_ASSEMBLY=GRCH38 SPECIES=HSA URI=https://www.gencodegenes.org/human/
+  picard_sort_sam_extra: ''
+  picard_summary_extra: ''
+  samtools_faidx_extra: ''
+  samtools_fixmate_extra: -c -m
+  samtools_sort_memory: '1'
+  samtools_view: -b -h -F 12
+ref:
+  fasta: genomes/genome.fasta
+  known:
+  - genomes/dbsnp.vcf.gz
+singularity_docker_image: docker://continuumio/miniconda3:4.4.10
+threads: 1
+workdir: /home/tdayris/Documents/Developpement/tdayris-perso/wes-mapping-bwa-gatk/tests/
+workflow:
+  fastqc: true
+  mapping_quality: true
+  multiqc: true
