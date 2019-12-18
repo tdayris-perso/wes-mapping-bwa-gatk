@@ -1,3 +1,10 @@
+SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -euio pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+
 ### Variables ###
 # Tools
 PYTEST         = pytest
@@ -24,57 +31,51 @@ SNAKE_THREADS  = 1
 default: all-unit-tests
 
 ### UNIT TESTS ###
-# Running all tests
-all-unit-tests: SHELL:=$(BASH) -i
+# Running all unit-tests (one for each python scripts)
 all-unit-tests:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTEST) -v $(TEST_CONFIG) $(TEST_DESIGN)
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${PYTEST} -v ${TEST_CONFIG} ${TEST_DESIGN}
 
-# Running tests on configuration only
-config-tests: SHELL:=$(BASH) -i
+# Running all unit test (on prepare_config.py only)
 config-tests:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTEST) -v $(TEST_CONFIG) && \
-	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --debug --cold-storage /mnt
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${PYTEST} -v ${TEST_CONFIG} && \
+	${PYTHON} ${TEST_CONFIG} ${GENOME_PATH} ${DBSNP_PATH} --debug --cold-storage /mnt
 
-# Running tests on design only
-design-tests: SHELL:=$(BASH) -i
+# Running all unit test (on prepare_design.py only)
 design-tests:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTEST) -v $(TEST_DESIGN) && \
-	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --debug
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${PYTEST} -v ${TEST_DESIGN} && \
+	${PYTHON} ${TEST_DESIGN} --single --recursive ${PWD} --debug
 
 ### Continuous Integration Tests ###
 # Running snakemake on test datasets
-ci-tests: SHELL:=$(BASH) -i
 ci-tests:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
-	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --forceall --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report --directory ${PWD}/tests
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${PYTHON} ${TEST_DESIGN} --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
+	${PYTHON} ${TEST_CONFIG} ${GENOME_PATH} ${DBSNP_PATH} --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report --directory ${PWD}/tests
+.PHONY: ci-tests
 
-
-# Running snakemake on test datasets
-singularity-tests: SHELL:=$(BASH) -i
+# Running snakemake on test datasets with singularity flag raised on
 singularity-tests:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(PYTHON) $(TEST_DESIGN) --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
-	$(PYTHON) $(TEST_CONFIG) $(GENOME_PATH) $(DBSNP_PATH) --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --forceall --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --report --directory ${PWD}/tests
-
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${PYTHON} ${TEST_DESIGN} --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
+	${PYTHON} ${TEST_CONFIG} ${GENOME_PATH} ${DBSNP_PATH} --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report --directory ${PWD}/tests
+.PHONY: singularity-tests
 
 # Environment building through conda
-conda-tests: SHELL:=$(BASH) -i
 conda-tests:
-	$(CONDA_ACTIVATE) base && \
-	$(CONDA) env create --file $(ENV_YAML) --force && \
-	$(CONDA) activate $(ENV_NAME)
+	${CONDA_ACTIVATE} base && \
+	${CONDA} env create --file ${ENV_YAML} --force && \
+	${CONDA} activate ${ENV_NAME}
 
 
-# Cleaning
-clean: SHELL:=$(BASH) -i
+# Cleaning Snakemake outputs
 clean:
-	$(CONDA_ACTIVATE) $(ENV_NAME) && \
-	$(SNAKEMAKE) -s $(SNAKE_FILE) --use-conda -j $(SNAKE_THREADS) --force --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests --delete-all-output
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --force --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests --delete-all-output
+.PHONY: clean
