@@ -15,4 +15,4 @@ dependencies:
   - conda-forge::zlib=1.2.11
   - conda-forge::openssl=1.1.1d
   - conda-forge::networkx=2.4
-  - bioconda::snakemake=5.8.1
+  - bioconda::snakemake=5.8.2
