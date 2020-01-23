@@ -79,3 +79,13 @@ clean:
 	${CONDA_ACTIVATE} ${ENV_NAME} && \
 	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --force --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests --delete-all-output
 .PHONY: clean
+
+
+# Display pipeline graph
+workflow.png:
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --force --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests --rulegraph | dot -T png > workflow.png
+
+example.png:
+	${CONDA_ACTIVATE} ${ENV_NAME} && \
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --force --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests --dag | dot -T png > example.png
