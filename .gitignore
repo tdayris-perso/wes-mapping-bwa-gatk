@@ -8,3 +8,5 @@ tests/mapped
 tests/dbsnp*
 tests/gatk
 *__pycache__*
+tests/genome
+tests/report.html
