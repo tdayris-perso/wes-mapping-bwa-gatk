@@ -13,7 +13,7 @@ import pandas as pd     # Deal with TSV files (design)
 import sys              # System related operations
 
 # Snakemake-Wrappers version
-swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.42.0"
+swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.49.0"
 # github prefix
 git = "https://bitbucket.org/tdayris/snakemake-wrappers/raw"
 
@@ -201,7 +201,7 @@ def get_gatk_args(wildcards) -> str:
     if "--TMP_DIR" not in config['params']['gatk_bqsr_extra']:
         return (
             f"{config['params']['gatk_bqsr_extra']} "
-            f"--TMP_DIR TMP_BQSR_{wildcards.sample}"
+            f"--tmp-dir TMP_BQSR_{wildcards.sample}"
         )
     return config['params']['gatk_bqsr_extra']
 
