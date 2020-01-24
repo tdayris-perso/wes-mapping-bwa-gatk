@@ -15,6 +15,8 @@ rule vcf_index_tbi:
         time_min = (
             lambda wildcards, attempt: min(attempt * 45, 180)
         )
+    message:
+        "Indexing VCF with bcftools"
     version:
         1
     conda:
