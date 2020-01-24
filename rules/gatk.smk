@@ -66,14 +66,12 @@ rule gatk_bqsr:
         time_min = (
             lambda wildcards, attempt: min(attempt * 180, 480)
         )
-    # log:
-    #     "logs/gatk/bqsr/{sample}.log"
+    log:
+        "logs/gatk/bqsr/{sample}.log"
     params:
         java_opts = (
             lambda wildcards, resources: get_java_args(wildcards, resources)
         ),
-        extra = (
-            lambda wildcards: get_gatk_args(wildcards)
-        )
+        extra = config["params"].get("gatk_bqsr_extra", "")
     wrapper:
         f"{swv}/bio/gatk/baserecalibrator"

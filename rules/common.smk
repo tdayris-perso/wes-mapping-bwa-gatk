@@ -194,18 +194,6 @@ def sample_id() -> List[str]:
     return design["Sample_id"].tolist()
 
 
-def get_gatk_args(wildcards) -> str:
-    """
-    Return enhanced GATK arguments
-    """
-    if "--TMP_DIR" not in config['params']['gatk_bqsr_extra']:
-        return (
-            f"{config['params']['gatk_bqsr_extra']} "
-            f"--tmp-dir TMP_BQSR_{wildcards.sample}"
-        )
-    return config['params']['gatk_bqsr_extra']
-
-
 def get_java_args(wildcards, resources) -> str:
     """
     Return java args for GATK
