@@ -200,7 +200,6 @@ def get_java_args(wildcards, resources) -> str:
     """
     makedirs("tmp")
     return (
-        f"-Djava.io.tmpdir=tmp/JAVA_TMP_{wildcards.sample} "
         f"-Xmx{resources.mem_mb}m"
     )
 
