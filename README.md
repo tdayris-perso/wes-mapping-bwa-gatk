@@ -1,6 +1,6 @@
 # Snkemake workflow: wes-mapping-bwa-gatk
 
-[![GitHub actions status](https://github.com/tdayris-perso/wes-mapping-bwa-gatk/workflows/CI/badge.svg?branch=master)](https://github.com/tdayris-perso/wes-mapping-bwa-gatk/workflows/CI/badge.svg?branch=master)
+[![GitHub actions status](https://github.com/tdayris-perso/wes-mapping-bwa-gatk/workflows/CI/badge.svg?branch=master)](https://github.com/tdayris-perso/wes-mapping-bwa-gatk/actions?query=branch%3Amaster+workflow%3ACI)
 
 This is the [Snakemake](https://academic.oup.com/bioinformatics/article/28/19/2520/290322) workflow for WES, fastq formatted reads mapping with [BWA](https://github.com/lh3/bwa), [Samtools](https://github.com/samtools/samtools), and [GATK](https://gatkforums.broadinstitute.org/gatk)
 
