@@ -15,7 +15,7 @@ import sys              # System related operations
 # Snakemake-Wrappers version
 swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.49.0"
 # github prefix
-git = "https://bitbucket.org/tdayris/snakemake-wrappers/raw"
+git = "https://raw.githubusercontent.com/tdayris-perso/snakemake-wrappers/"
 
 # Loading configuration
 configfile: "config.yaml"
