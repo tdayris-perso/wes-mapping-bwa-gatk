@@ -10,7 +10,7 @@ MAKEFLAGS += --no-builtin-rules
 PYTEST         = pytest
 BASH           = bash
 CONDA          = conda
-PYTHON         = python3.7
+PYTHON         = python3.8
 SNAKEMAKE      = snakemake
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
@@ -50,25 +50,23 @@ design-tests:
 
 ### Continuous Integration Tests ###
 # Running snakemake on test datasets
-ci-tests:
+test-conda-report.html:
 	${CONDA_ACTIVATE} ${ENV_NAME} && \
 	${PYTHON} ${TEST_DESIGN} --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
 	${PYTHON} ${TEST_CONFIG} ${GENOME_PATH} ${DBSNP_PATH} --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
 	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --configfile ${PWD}/tests/config.yaml --directory ${PWD}/tests && \
-	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report --directory ${PWD}/tests
-.PHONY: ci-tests
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report test-conda-report.html --directory ${PWD}/tests
 
 # Running snakemake on test datasets with singularity flag raised on
-singularity-tests:
+test-singularity-report.html:
 	${CONDA_ACTIVATE} ${ENV_NAME} && \
 	${PYTHON} ${TEST_DESIGN} --single --recursive ${PWD} --output ${PWD}/tests/design.tsv --debug && \
 	${PYTHON} ${TEST_CONFIG} ${GENOME_PATH} ${DBSNP_PATH} --workdir ${PWD}/tests/ --debug --cold-storage /mnt --samtools-sort-memory 1 && \
 	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --configfile ${PWD}/tests/config.yaml --use-singularity --directory ${PWD}/tests && \
-	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report --directory ${PWD}/tests
-.PHONY: singularity-tests
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --report test-singularity-report.html --directory ${PWD}/tests
 
 # Environment building through conda
-conda-tests:
+conda-install:
 	${CONDA_ACTIVATE} base && \
 	${CONDA} env create --file ${ENV_YAML} --force && \
 	${CONDA} activate ${ENV_NAME}

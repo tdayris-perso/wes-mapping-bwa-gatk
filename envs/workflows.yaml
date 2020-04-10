@@ -1,18 +1,19 @@
+---
 name: wes-mapping-bwa-gatk
 channels:
   - bioconda
   - conda-forge
   - defaults
 dependencies:
-  - conda-forge::python=3.7.3
-  - conda-forge::pytest=5.3.4
-  - conda-forge::datrie=0.8
-  - conda-forge::git=2.24.0
-  - conda-forge::jinja2=2.10.3
+  - conda-forge::python=3.8.2
+  - conda-forge::pytest=5.4.1
+  - conda-forge::datrie=0.8.2
+  - conda-forge::git=2.26.0
+  - conda-forge::jinja2=2.11.1
   - conda-forge::pygraphviz=1.5
   - conda-forge::flask=1.1.1
-  - conda-forge::pandas=0.25.3
+  - conda-forge::pandas=1.0.3
   - conda-forge::zlib=1.2.11
-  - conda-forge::openssl=1.1.1d
+  - conda-forge::openssl=1.1.1e
   - conda-forge::networkx=2.4
-  - bioconda::snakemake=5.10.0
+  - bioconda::snakemake=5.14.0

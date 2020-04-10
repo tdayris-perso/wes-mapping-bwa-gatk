@@ -13,9 +13,9 @@ import pandas as pd     # Deal with TSV files (design)
 import sys              # System related operations
 
 # Snakemake-Wrappers version
-swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.49.0"
+swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.51.0"
 # github prefix
-git = "https://raw.githubusercontent.com/tdayris-perso/snakemake-wrappers/"
+git = "https://raw.githubusercontent.com/tdayris/snakemake-wrappers/Unofficial"
 
 # Loading configuration
 configfile: "config.yaml"

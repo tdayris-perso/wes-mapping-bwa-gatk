@@ -28,8 +28,8 @@ jobs:
       - name: Scripts unit-testing
         run: make all-unit-tests
       - name: Run Snakemake-workflow
-        run: make ci-tests
+        run: make test-conda-report.html
       - name: Clean
         run: make clean
       - name: Run workflow in Singularity
-        run: make singularity-tests
+        run: make test-singularity-report.html

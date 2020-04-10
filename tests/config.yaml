@@ -22,7 +22,7 @@ ref:
   - genomes/dbsnp.vcf.gz
 singularity_docker_image: docker://continuumio/miniconda3:4.4.10
 threads: 1
-workdir: /home/tdayris/Documents/Developpement/tdayris-perso/wes-mapping-bwa-gatk/tests/
+workdir: /home/tdayris/Documents/Developments/wes-mapping-bwa-gatk/tests/
 workflow:
   fastqc: true
   mapping_quality: true

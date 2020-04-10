@@ -69,7 +69,8 @@ rule picard_alignment_summary:
         report(
             "picard/stats/summary/{sample}_summary.txt",
             caption="../report/picard_summary.rst",
-            category="Quality Controls"
+            category="Quality",
+            subcategory="Picard"
         )
     message:
         "Collecting alignment metrics from {wildcards.sample} with picard"
@@ -103,7 +104,8 @@ rule picard_insert_size:
         pdf = report(
             "picard/stats/size/{sample}.isize.pdf",
             caption="../report/picard_isize.rst",
-            category="Quality Controls"
+            category="Quality",
+            subcategory="Picard"
         )
     message:
         "Collecting insert size information on {wildcards.sample} with Picard."
