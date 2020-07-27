@@ -6,7 +6,7 @@ if sys.version_info < (3, 8):
     raise SystemError("Please use Python 3.8 or later.")
 
 # Snakemake 5.14.0 at least is required
-snakemake.utils.min_version("5.14.0")
+snakemake.utils.min_version("5.20.1")
 
 include: "rules/common.smk"
 include: "rules/copy.smk"

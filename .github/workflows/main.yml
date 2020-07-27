@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Setup workflow environment
-        run: make conda-tests
+        run: make conda-install
       - name: Scripts unit-testing
         run: make all-unit-tests
       - name: Run Snakemake-workflow
