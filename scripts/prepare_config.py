@@ -150,7 +150,7 @@ def parse_args(args: Any = sys.argv[1:]) -> argparse.ArgumentParser:
         "--cold-storage",
         help="Path to cold storage mount points (default: %(default)s)",
         type=str,
-        default="None",
+        default=["None"],
         nargs="+"
     )
 
