@@ -295,7 +295,7 @@ def test_parse_args() -> None:
     expected = argparse.Namespace(
         bwa_index_extra='',
         bwa_map_extra='-T 20 -M',
-        cold_storage='None',
+        cold_storage=['None'],
         copy_extra='--verbose',
         debug=False,
         design='design.tsv',
@@ -409,7 +409,7 @@ def test_args_to_dict() -> None:
     >>> pytest -v prepare_config.py -k test_args_to_dict
     """
     expected = {
-        'cold_storage': 'None',
+        'cold_storage': ['None'],
         'design': 'design.tsv',
         'params': {
             'bwa_index_extra': '',
